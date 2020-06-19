@@ -39,7 +39,7 @@ const useProvincia = (label, stateInicial, opciones) => {
             >
                 <option value=""> --Seleccione Provincia-- </option>
                 {opciones.map(opcion => (
-                    <option key={opcion.provincias.id} value={opcion.provincias.id}> {opcion.nombre} </option>
+                    <option key={opcion.id} value={opcion.id}> {opcion.nombre} </option>
                 ))}
 
             </Select>

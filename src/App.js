@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import imagen from './Ministerio.png';
 import Formulario from './components/Formulario';
 import axios from 'axios';
-//import Spinner from './components/Spinner';
-
+import Spinner from './components/Spinner';
+import Muestreador from './components/Muestreador';
 
 const Contenedor = styled.div`
   max-width: 900px;
@@ -50,7 +50,7 @@ function App() {
     const [resultado, guardarResultado] = useState({});
   
     //spinner
-    //const [cargando, guardarCargando] = useState(false);
+    const [cargando, guardarCargando] = useState(false);
     
     useEffect(() => {
   
@@ -60,26 +60,26 @@ function App() {
       if (provincia === '') return;
   
       //consultar la api / acá tamb esta la duda
-      const url = `https://infra.datos.gob.ar/catalog/modernizacion/dataset/7/distribution/7.4/download/municipios.json` 
+      const url = `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&id=${municipio}`;
       const resultado = await axios.get(url)
   
       //mostrar el spinner
-      //  guardarCargando(true);
+      guardarCargando(true);
   
       //ocultar el spinner y mostrar el resultado
-      //  setTimeout(() => {
-      //    guardarCargando(false)
+      setTimeout(() => {
+          guardarCargando(false)
   
           //guardar resultado
-        //guardarResultado(resultado.data.DISPLAY[municipio][provincia]);
-        //}, 3000);
+        guardarResultado(resultado.data.municipios);
+        }, 3000);
         guardarResultado(resultado);
       }
       extraermunicipio();
     },[provincia,municipio])
   
     //mostrar spinner o resultado
-   // const componente = (cargando) ? <Spinner/> : <Cotizador resultado={resultado}/> 
+const componente = (cargando) ? <Spinner/> : <Muestreador resultado={resultado}/> 
   
   
   
@@ -99,7 +99,7 @@ function App() {
       guardarProvincia={guardarProvincia}
       guardarMunicipio={guardarMunicipio}
       />
-      {/* {resultado} */}
+      {componente};
       </div>
     </Contenedor>
   );

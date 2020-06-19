@@ -28,7 +28,7 @@ const useMunicipio = (label, stateInicial, opciones) => {
     //console.log(opciones);
 
     //state de nuestro customHook
-    const [state, actualizarState] = useState(stateInicial)
+    const [state, actualizarState] = useState(stateInicial);
 
     const SelectMunicipio = () => (
         <>
@@ -38,12 +38,10 @@ const useMunicipio = (label, stateInicial, opciones) => {
             value={state}
         
         >
-            {/* Por acá esta el error quizas */}
-            <option value="">--Seleccione municipio--</option>
-            {opciones.map(opcion => (
-                <option key={opcion.municipios.provincia.id} value={opcion.municipios.nombre}
-                >{opcion.municipios.nombre_completo}</option>
-            ))}
+            <option value="">==Seleccione Municipio==</option>
+                        {opciones.map(opcion=>(
+                            <option key={opcion.id} value={opcion.id}>{opcion.nombre}</option>
+                        ))}
         </Select>
     </>
     );

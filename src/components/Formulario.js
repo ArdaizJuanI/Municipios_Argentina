@@ -34,7 +34,7 @@ const Formulario = ({guardarProvincia, guardarMunicipio}) => {
     const [error,guardaError] = useState(false);
 
 //Utilizar useProvincia
-const [provincia, SelectProvincia, actualizarState] = useProvincia('Elige tu Provincia', '', listadoprovincia);
+const [provincia, SelectProvincia] = useProvincia('Elige tu Provincia', '', listadoprovincia);
 
 //Utilizar useMunicipio
 const [municipio, SelectMunicipio] = useMunicipio('Elige tu Municipio', '', listadomunicipio);
@@ -43,23 +43,25 @@ const [municipio, SelectMunicipio] = useMunicipio('Elige tu Municipio', '', list
 //API Provincia
     useEffect(() => {
         const consultarAPIProvincia = async() => {
-            const url = 'https://infra.datos.gob.ar/catalog/modernizacion/dataset/7/distribution/7.4/download/municipios.json';
+        
+            const url = 'https://apis.datos.gob.ar/georef/api/provincias?';
             
-            const resultado = await axios.get(url)
-            guardarProvincias(resultado.catalog.municipios.nombre);
+            const resultado = await axios.get(url);
+            guardarProvincias(resultado.data.provincias);
         }
         consultarAPIProvincia()
     },[])
 // API Municipio - este link lo encontramos en la pagina
     useEffect(()=>{
-        const consultarAPIMunicipio = async () => {
-            const url= `https://apis.datos.gob.ar/georef/api/municipios?provincia=${provincia}&id=${municipio}`
+        const consultarMunicipios = async() => {
+            if(provincia === '') return;
+            const url= `https://apis.datos.gob.ar/georef/api/municipios?campos=estandar&max=1850&provincia=${provincia}`;
             const resultado= await axios.get(url);
-            guardarMunicipios(resultado.georef.municipios);
-            
-        }
-        consultarAPIMunicipio();
-    },[municipio, provincia])
+        guardarMunicipios(resultado.data.municipios);
+
+    }
+    consultarMunicipios();
+},[provincia])
 
 //cuando el user hace un submit
 
