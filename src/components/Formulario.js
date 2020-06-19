@@ -7,10 +7,10 @@ import Error from './Error';
 
 
 const Boton = styled.input`
-    margin-top: 20px;
+    margin-top: 30px;
     font-weight: bold;
     font-size: 20px;
-    padding: 10px;
+    padding: 20px;
     background-color: #66a2fe;
     border: none;
     width: 100%;
@@ -19,7 +19,7 @@ const Boton = styled.input`
     transition: background-color .3s ease;
 
     &:hover{
-        background-color: #326AC0;
+        background-color: #33517F;
         cursor: pointer;
     }
 `;
@@ -51,7 +51,7 @@ const [municipio, SelectMunicipio] = useMunicipio('Elige tu Municipio', '', list
         }
         consultarAPIProvincia()
     },[])
-// API Municipio - este link lo encontramos en la pagina
+// API Municipio
     useEffect(()=>{
         const consultarMunicipios = async() => {
             if(provincia === '') return;
@@ -89,7 +89,7 @@ return (
             <SelectMunicipio/>
         <Boton
                 type="submit"
-                value="Calcular"
+                value="Buscar"
             />
             </form>
 );
